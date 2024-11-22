@@ -1,6 +1,9 @@
 <resources>
-    <string name="app_name">AppointmentGeneration</string>
+    <string name="app_name">PickMate</string>
+    <string name="app_name_kr">픽메이트</string>>
     <string name="title_home">Home</string>
     <string name="title_mypage">마이페이지</string>
     <string name="title_schedules">내 약속</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
