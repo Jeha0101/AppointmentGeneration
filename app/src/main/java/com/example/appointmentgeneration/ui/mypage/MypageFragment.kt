@@ -4,39 +4,41 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.appointmentgeneration.databinding.FragmentMypageBinding
+import androidx.navigation.fragment.findNavController
+import com.example.appointmentgeneration.R
 
 class MypageFragment : Fragment() {
-
-    private var _binding: FragmentMypageBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(MypageViewModel::class.java)
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_mypage, container, false)
 
-        _binding = FragmentMypageBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        // 프로필 이미지 및 이름 설정
+        val profileImage: ImageView = view.findViewById(R.id.image_profile)
+        val username: TextView = view.findViewById(R.id.text_username)
+        username.text = "홍길동" // 예: 사용자 이름 (실제로는 동적 데이터 사용)
 
-        val textView: TextView = binding.textMypage
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        // 내 약속 보기 버튼
+        val manageAppointmentsButton: Button = view.findViewById(R.id.button_manage_appointments)
+        manageAppointmentsButton.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_mypage_to_navigation_schedules)
         }
-        return root
-    }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        // 로그아웃 버튼
+        val logoutButton: Button = view.findViewById(R.id.button_logout)
+        logoutButton.setOnClickListener {
+            Toast.makeText(context, "로그아웃되었습니다.", Toast.LENGTH_SHORT).show()
+        }
+
+        return view
     }
 }
+
