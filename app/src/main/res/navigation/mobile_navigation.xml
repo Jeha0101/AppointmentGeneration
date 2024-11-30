@@ -1,9 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/loginPage">
+
+    <!-- Login Page Fragment -->
+    <fragment
+        android:id="@+id/loginPage"
+        android:name="com.example.appointmentgeneration.LoginPage"
+        android:label="로그인"
+        tools:layout="@layout/fragment_login_page">
+        <action
+            android:id="@+id/action_loginPage_to_navigation_home"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_loginPage_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+
+    <!-- SignUp Page Fragment -->
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.appointmentgeneration.SignUp"
+        tools:layout="@layout/fragment_sign_up">
+        <action
+            android:id="@+id/action_signUp_to_nextPage"
+            app:destination="@id/navigation_home" />
+    </fragment>
 
     <!-- Home Fragment -->
     <fragment
