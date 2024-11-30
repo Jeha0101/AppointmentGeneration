@@ -5,65 +5,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment"
-    tools:viewBinding="true">
+    tools:context=".ui.home.HomeFragment">
 
-    <!-- 출발 위치 -->
     <TextView
         android:id="@+id/text_departure_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="출발 위치"
+        android:text="@string/departure_location"
         android:textSize="16sp"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="16dp" />
 
-    <!-- 친구 위치 추가하기 버튼 -->
     <Button
         android:id="@+id/button_add_friend_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="친구 위치 추가하기"
+        android:text="@string/add_friend_location"
         app:layout_constraintTop_toBottomOf="@id/text_departure_title"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="8dp"
         android:layout_marginStart="16dp" />
 
-
-    <!-- 희망 목적지 -->
     <TextView
         android:id="@+id/text_destination_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="희망 목적지"
+        android:text="@string/desired_destination"
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@id/button_add_friend_location"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp" />
 
-    <!-- 목적지 추가하기 버튼 -->
     <Button
         android:id="@+id/button_add_destination"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="목적지 추가하기"
+        android:text="@string/add_destination"
         app:layout_constraintTop_toBottomOf="@id/text_destination_title"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="8dp"
         android:layout_marginStart="16dp" />
 
-    <!-- 일정 생성 버튼 (Floating Action Button) -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_create_schedule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_add"
+        android:contentDescription="@string/create_schedule"
+        android:layout_margin="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
