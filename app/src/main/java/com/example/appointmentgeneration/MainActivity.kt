@@ -2,13 +2,13 @@ package com.example.appointmentgeneration
 
 import android.os.Bundle
 import android.view.View
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.appointmentgeneration.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,14 +16,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navView: BottomNavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        val navView: BottomNavigationView = binding.navView // 유지: 'navView' 초기화 (HEAD 기준)
+        val navController = findNavController(R.id.nav_host_fragment_activity_main) // 유지: 'HEAD'에서의 컨트롤러 ID 사용
 
-        if (isUserLoggedIn()) {
+        if (isUserLoggedIn()) { // 유지: 로그인 상태에 따른 초기 화면 설정
             navController.navigate(R.id.navigation_home)
         } else {
             navController.navigate(R.id.loginPage)
@@ -31,19 +30,22 @@ class MainActivity : AppCompatActivity() {
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_mypage, R.id.navigation_home, R.id.navigation_schedules
+                R.id.navigation_home,
+                R.id.navigation_mypage,
+                R.id.navigation_schedules
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        // 네비게이션 변경 시 앱바와 네비게이션 바 표시/숨김 제어
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.loginPage, R.id.signUpFragment -> {
+                R.id.loginPage, R.id.signUpFragment -> { // 숨김: 로그인 및 회원가입 화면
                     supportActionBar?.hide()
                     navView.visibility = View.GONE
                 }
-                else -> {
+                else -> { // 표시: 다른 화면
                     supportActionBar?.show()
                     navView.visibility = View.VISIBLE
                 }

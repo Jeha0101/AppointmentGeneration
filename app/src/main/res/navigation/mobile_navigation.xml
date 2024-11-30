@@ -1,6 +1,5 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/loginPage">
 
@@ -28,40 +27,18 @@
             app:destination="@id/navigation_home" />
     </fragment>
 
-    <!-- Home Fragment -->
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.appointmentgeneration.ui.home.HomeFragment"
-        android:label="홈"
-        tools:layout="@layout/fragment_home">
+        android:label="@string/home_title" />
 
-        <action
-            android:id="@+id/action_home_to_scheduleCreation"
-            app:destination="@id/scheduleCreationFragment" />
-    </fragment>
-
-    <!-- Mypage Fragment -->
     <fragment
         android:id="@+id/navigation_mypage"
         android:name="com.example.appointmentgeneration.ui.mypage.MypageFragment"
-        android:label="@string/title_mypage"
-        tools:layout="@layout/fragment_mypage">
-        <action
-            android:id="@+id/action_navigation_mypage_to_navigation_schedules"
-            app:destination="@id/navigation_schedules" />
-    </fragment>
+        android:label="@string/mypage_title" />
 
-    <!-- Schedules Fragment -->
     <fragment
         android:id="@+id/navigation_schedules"
         android:name="com.example.appointmentgeneration.ui.schedules.SchedulesFragment"
-        android:label="@string/title_schedules"
-        tools:layout="@layout/fragment_schedules" />
-
-    <!-- Schedule Creation Fragment -->
-    <fragment
-        android:id="@+id/scheduleCreationFragment"
-        android:name="com.example.appointmentgeneration.ui.schedule.ScheduleCreationFragment"
-        android:label="일정 생성"
-        tools:layout="@layout/schedule_creation_fragment" />
+        android:label="@string/schedules_title" />
 </navigation>
