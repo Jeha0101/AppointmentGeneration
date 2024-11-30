@@ -1,59 +1,73 @@
 package com.example.appointmentgeneration
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [LoginPage.newInstance] factory method to
- * create an instance of this fragment.
- */
 class LoginPage : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var idEditText: EditText
+    private lateinit var pwEditText: EditText
+    private lateinit var loginButton: Button
+    private lateinit var signupButton: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login_page, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_login_page, container, false)
+
+        idEditText = rootView.findViewById(R.id.id_edit_text)
+        pwEditText = rootView.findViewById(R.id.pw_edit_text)
+        loginButton = rootView.findViewById(R.id.login_page_login_button)
+        signupButton = rootView.findViewById(R.id.login_page_signup_button)
+
+        pwEditText.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+
+        loginButton.setOnClickListener {
+            handleLogin()
+        }
+
+        signupButton.setOnClickListener {
+            findNavController().navigate(R.id.action_loginPage_to_signUpFragment)
+        }
+
+        return rootView
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LoginPage.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LoginPage().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun handleLogin() {
+        val id = idEditText.text.toString().trim()
+        val password = pwEditText.text.toString().trim()
+
+        when {
+            id.isEmpty() && password.isEmpty() -> {
+                Toast.makeText(requireContext(), "아이디와 비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show()
+            }
+            id.isEmpty() -> {
+                Toast.makeText(requireContext(), "아이디를 입력하세요.", Toast.LENGTH_SHORT).show()
+            }
+            password.isEmpty() -> {
+                Toast.makeText(requireContext(), "비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                if (checkCredentials(id, password)) {
+                    findNavController().navigate(R.id.action_loginPage_to_navigation_home)
+                } else {
+                    Toast.makeText(requireContext(), "아이디와 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+    }
+
+    private fun checkCredentials(id: String, password: String): Boolean {
+        // 파이어베이스에서 사용자 아이디 정보를 읽어오기
+        // 일치하는 아이디를 찾아서 비밀번호 읽어오기
+        // 비밀번호가 일치하면 true, 아니면 false
+        return true
     }
 }

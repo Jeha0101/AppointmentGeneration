@@ -12,8 +12,8 @@
 
     <ImageView
         android:id="@+id/login_page_icon"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_margin="15dp"
         android:src="@drawable/pickmate_icon"
         />
@@ -34,7 +34,7 @@
         />
     <View
         android:layout_width="match_parent"
-        android:layout_height="40dp"/>
+        android:layout_height="30dp"/>
 
     <LinearLayout
         android:layout_width="300dp"
@@ -58,6 +58,7 @@
             android:id="@+id/id_edit_text"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:minHeight="48dp"
             android:gravity="end"
             android:hint="아이디를 입력하세요"
@@ -89,6 +90,7 @@
             android:id="@+id/pw_edit_text"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:minHeight="48dp"
             android:gravity="end"
             android:hint="비밀번호를 입력하세요"
