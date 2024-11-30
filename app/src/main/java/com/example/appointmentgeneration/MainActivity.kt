@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -19,10 +20,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navView: BottomNavigationView = binding.navView // 유지: 'navView' 초기화 (HEAD 기준)
-        val navController = findNavController(R.id.nav_host_fragment_activity_main) // 유지: 'HEAD'에서의 컨트롤러 ID 사용
+        val navView: BottomNavigationView = binding.bottomNavView
+        val navController = binding.navHostFragment.getFragment<NavHostFragment>().navController
 
-        if (isUserLoggedIn()) { // 유지: 로그인 상태에 따른 초기 화면 설정
+        if (isUserLoggedIn()) {
             navController.navigate(R.id.navigation_home)
         } else {
             navController.navigate(R.id.loginPage)
