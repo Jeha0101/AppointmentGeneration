@@ -22,6 +22,7 @@
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.example.appointmentgeneration.SignUp"
+        android:label="회원가입"
         tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_signUp_to_nextPage"
