@@ -57,6 +57,7 @@ class LoginPage : Fragment() {
             else -> {
                 if (checkCredentials(id, password)) {
                     findNavController().navigate(R.id.action_loginPage_to_navigation_home)
+                    loginSuccess(id)
                 } else {
                     Toast.makeText(requireContext(), "아이디와 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
                 }
@@ -69,5 +70,10 @@ class LoginPage : Fragment() {
         // 일치하는 아이디를 찾아서 비밀번호 읽어오기
         // 비밀번호가 일치하면 true, 아니면 false
         return true
+    }
+
+    private fun loginSuccess(id: String) {
+        // 로그인 성공 시 처리
+        // 아마도 id 전달
     }
 }

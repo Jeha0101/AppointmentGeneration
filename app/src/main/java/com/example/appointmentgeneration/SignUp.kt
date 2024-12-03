@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 
 class SignUp : Fragment() {
     private lateinit var nicknameEditText: EditText
@@ -68,7 +69,8 @@ class SignUp : Fragment() {
         signupButton.setOnClickListener {
             if (areFieldsValid()) {
                 createUser()
-//                findNavController().navigate(R.id.action_signUp_to_nextPage)
+                findNavController().navigate(R.id.action_signUp_to_nextPage)
+                loginSuccess(idEditText.text.toString())
             } else {
                 Toast.makeText(requireContext(), "올바른 값을 입력하세요.", Toast.LENGTH_SHORT).show()
             }
@@ -97,5 +99,10 @@ class SignUp : Fragment() {
 
     private fun createUser() {
         // 사용자를 파이어베이스에 추가하는 코드를 구현할 것
+    }
+
+    private fun loginSuccess(id: String) {
+        // 로그인 성공 시 처리
+        // 아마도 id 전달
     }
 }
