@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AppointmentGeneration</string>
+    <string name="app_name">Appointment\nGeneration</string>
     <string name="title_mypage">My Page</string>
     <string name="title_schedules">Schedules</string>
     <string name="title_home">Home</string>
