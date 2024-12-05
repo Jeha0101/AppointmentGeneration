@@ -1,5 +1,5 @@
 package com.example.appointmentgeneration
-
+import androidx.navigation.NavController
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -12,8 +12,8 @@ import com.example.appointmentgeneration.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.bottomNavView
-        val navController = binding.navHostFragment.getFragment<NavHostFragment>().navController
+        navController = binding.navHostFragment.getFragment<NavHostFragment>().navController
 
         if (isUserLoggedIn()) {
             navController.navigate(R.id.navigation_home)
@@ -37,16 +37,34 @@ class MainActivity : AppCompatActivity() {
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
 
-        // 네비게이션 변경 시 앱바와 네비게이션 바 표시/숨김 제어
+        // 하단 네비게이션 클릭 리스너 추가
+        navView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    navController.navigate(R.id.navigation_home)
+                    true
+                }
+                R.id.navigation_mypage -> {
+                    navController.navigate(R.id.navigation_mypage)
+                    true
+                }
+                R.id.navigation_schedules -> {
+                    navController.navigate(R.id.navigation_schedules)
+                    true
+                }
+                else -> false
+            }
+        }
+
+        // 기존 destination changed 리스너 유지
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.loginPage, R.id.signUpFragment -> { // 숨김: 로그인 및 회원가입 화면
+                R.id.loginPage, R.id.signUpFragment -> {
                     supportActionBar?.hide()
                     navView.visibility = View.GONE
                 }
-                else -> { // 표시: 다른 화면
+                else -> {
                     supportActionBar?.show()
                     navView.visibility = View.VISIBLE
                 }
@@ -55,8 +73,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isUserLoggedIn(): Boolean {
-        // 로그인 상태를 확인하는 로직 구현하기
-        // 로그인 상태라면 true를 반환하고, 그렇지 않으면 false를 반환합니다.
         return false
     }
 }

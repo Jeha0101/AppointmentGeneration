@@ -43,4 +43,22 @@
         android:id="@+id/navigation_schedules"
         android:name="com.example.appointmentgeneration.ui.schedules.SchedulesFragment"
         android:label="@string/schedules_title" />
+
+    <!-- 기존 navigation 태그 내에 추가 -->
+    <fragment
+        android:id="@+id/scheduleCreationFragment"
+        android:name="com.example.appointmentgeneration.ui.schedule.ScheduleCreationFragment"
+        android:label="약속 생성"
+        tools:layout="@layout/schedule_creation_fragment">
+    </fragment>
+
+    <!-- schedules fragment에 action 추가 -->
+    <action
+        android:id="@+id/action_navigation_schedules_to_scheduleCreationFragment"
+        app:destination="@id/scheduleCreationFragment" />
+
+    <!-- navigation_home fragment에 action 추가 -->
+    <action
+        android:id="@+id/action_navigation_home_to_scheduleCreationFragment"
+        app:destination="@id/scheduleCreationFragment" />
 </navigation>
