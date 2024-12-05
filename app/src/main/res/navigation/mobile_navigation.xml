@@ -56,4 +56,9 @@
     <action
         android:id="@+id/action_navigation_schedules_to_scheduleCreationFragment"
         app:destination="@id/scheduleCreationFragment" />
+
+    <!-- navigation_home fragment에 action 추가 -->
+    <action
+        android:id="@+id/action_navigation_home_to_scheduleCreationFragment"
+        app:destination="@id/scheduleCreationFragment" />
 </navigation>
