@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "445415537295",
+    "project_id": "appointmentgeneration-b2b50",
+    "storage_bucket": "appointmentgeneration-b2b50.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445415537295:android:e3ae70d62280da06c54efa",
+        "android_client_info": {
+          "package_name": "com.example.appointmentgeneration"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3i9qGQPynrsupgQUsRfUlIIP-zJa6gKY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
