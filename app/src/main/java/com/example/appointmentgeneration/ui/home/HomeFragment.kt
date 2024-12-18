@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.appointmentgeneration.BuildConfig
 import com.example.appointmentgeneration.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private val naver = BuildConfig.NAVER_MAP_KEY
 
     override fun onCreateView(
         inflater: LayoutInflater,
