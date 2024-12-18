@@ -1,115 +1,156 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
     tools:context=".ui.home.HomeFragment">
 
-    <!-- 출발 위치 섹션 -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="출발 위치"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_my_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="내 위치" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_add_friend"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="친구 위치 추가하기" />
-
-    <!-- 희망 목적지 섹션 -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="희망 목적지"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_add_destination"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="목적지 추가하기" />
-
-    <!-- 약속 일정 섹션 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 출발 위치 섹션 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="출발 위치"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_my_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="내 위치" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_date"
-            android:layout_width="0dp"
+            android:id="@+id/btn_add_friend"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="4dp"
-            android:text="날짜 선택" />
+            android:layout_marginTop="8dp"
+            android:text="친구 위치 추가하기" />
+
+        <!-- 희망 목적지 섹션 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="희망 목적지"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_time"
-            android:layout_width="0dp"
+            android:id="@+id/btn_add_destination"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="4dp"
-            android:text="시간 선택" />
+            android:layout_marginTop="8dp"
+            android:text="목적지 추가하기" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
+                android:text="날짜 선택" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
+                android:text="시간 선택" />
+        </LinearLayout>
+
+        <!-- 가격대 섹션 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="가격대"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <RadioButton
+                android:id="@+id/radio_no_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="상관없음" />
+
+            <RadioButton
+                android:id="@+id/radio_set_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="가격대 입력하기" />
+        </RadioGroup>
+
+        <!-- 추가 내용 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="방문 장소를 어떤 분위기로 원하시나요?"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_mood"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_romantic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="로맨틱" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_casual"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="캐주얼" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_unique"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="독특한" />
+            </com.google.android.material.chip.ChipGroup>
+        </LinearLayout>
+
+        <!-- 일정 생성 버튼 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_create_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="일정 생성하기" />
     </LinearLayout>
-
-    <!-- 가격대 설정 -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="가격대"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <RadioGroup
-        android:id="@+id/radio_group_price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp">
-
-        <RadioButton
-            android:id="@+id/radio_no_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="상관없음" />
-
-        <RadioButton
-            android:id="@+id/radio_set_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="가격대 입력하기" />
-    </RadioGroup>
-
-    <!-- 일정 생성하기 버튼 -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_create_schedule"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="일정 생성하기" />
-
-</LinearLayout>
+</ScrollView>
