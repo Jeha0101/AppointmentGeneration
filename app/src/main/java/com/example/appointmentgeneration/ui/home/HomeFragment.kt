@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.appointmentgeneration.databinding.FragmentHomeBinding
 import java.util.*
+import com.example.appointmentgeneration.R
 
 class HomeFragment : Fragment() {
 
@@ -17,7 +18,8 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
@@ -25,17 +27,13 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupClickListeners()
+        setupUI()
     }
 
-    private fun setupClickListeners() {
+    private fun setupUI() {
         with(binding) {
             btnAddFriend.setOnClickListener {
-                Toast.makeText(context, "친구 위치 추가 구현 예정", Toast.LENGTH_SHORT).show()
-            }
-
-            btnAddDestination.setOnClickListener {
-                Toast.makeText(context, "목적지 추가 구현 예정", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "친구 위치 추가를 선택했습니다.", Toast.LENGTH_SHORT).show()
             }
 
             btnDate.setOnClickListener {
@@ -43,11 +41,7 @@ class HomeFragment : Fragment() {
                 DatePickerDialog(
                     requireContext(),
                     { _, year, month, dayOfMonth ->
-                        Toast.makeText(
-                            context,
-                            "날짜: $year-${month + 1}-$dayOfMonth",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(context, "날짜: $year-${month + 1}-$dayOfMonth", Toast.LENGTH_SHORT).show()
                     },
                     calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH),
@@ -60,11 +54,7 @@ class HomeFragment : Fragment() {
                 TimePickerDialog(
                     requireContext(),
                     { _, hour, minute ->
-                        Toast.makeText(
-                            context,
-                            "시간: $hour:$minute",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(context, "시간: $hour:$minute", Toast.LENGTH_SHORT).show()
                     },
                     calendar.get(Calendar.HOUR_OF_DAY),
                     calendar.get(Calendar.MINUTE),
@@ -74,6 +64,13 @@ class HomeFragment : Fragment() {
 
             btnCreateSchedule.setOnClickListener {
                 Toast.makeText(context, "일정 생성 완료!", Toast.LENGTH_SHORT).show()
+            }
+
+            radioGroupPrice.setOnCheckedChangeListener { _, checkedId ->
+                when (checkedId) {
+                    R.id.radio_no_price -> Toast.makeText(context, "가격 제한 없음 선택", Toast.LENGTH_SHORT).show()
+                    R.id.radio_set_price -> Toast.makeText(context, "가격 설정 선택", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

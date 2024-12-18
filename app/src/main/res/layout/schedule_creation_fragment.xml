@@ -11,6 +11,16 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="내 약속"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
         <!-- 약속 정보 입력 섹션 -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardScheduleInfo"
@@ -18,7 +28,8 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="8dp"
             app:cardElevation="4dp"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/textViewTitle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -74,6 +85,13 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/cardScheduleInfo"/>
+
         <!-- 장소 추가 섹션 -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardLocations"
@@ -82,7 +100,7 @@
             android:layout_marginTop="16dp"
             app:cardCornerRadius="8dp"
             app:cardElevation="4dp"
-            app:layout_constraintTop_toBottomOf="@id/cardScheduleInfo">
+            app:layout_constraintTop_toBottomOf="@id/calendarView">
 
             <LinearLayout
                 android:layout_width="match_parent"
