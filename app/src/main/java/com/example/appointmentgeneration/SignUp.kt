@@ -115,7 +115,13 @@ class SignUp : Fragment() {
                     if (success) {
                         Toast.makeText(requireContext(), "회원가입 성공", Toast.LENGTH_SHORT).show()
                         loginSuccess(id)
-                        findNavController().navigate(R.id.action_signUp_to_nextPage)
+                        findNavController().navigate(
+                            R.id.action_signUp_to_nextPage,
+                            null,
+                            androidx.navigation.NavOptions.Builder()
+                                .setPopUpTo(R.id.loginPage, true) // loginPage 포함 백스택 정리
+                                .build()
+                        )
                     } else {
                         Toast.makeText(requireContext(), "회원가입 실패", Toast.LENGTH_SHORT).show()
                     }
@@ -182,6 +188,13 @@ class SignUp : Fragment() {
     }
 
     private fun loginSuccess(id: String) {
-        // 로그인 성공 처리
+        // 로그인 성공 처리 (SharedPreferences 사용하여 상태 저장)
+        val sharedPreferences = requireContext().getSharedPreferences("UserPrefs", 0)
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("isLoggedIn", true)
+        editor.putString("userId", id)
+        editor.apply()
+
+        Toast.makeText(requireContext(), "로그인 성공! 환영합니다, $id 님.", Toast.LENGTH_SHORT).show()
     }
 }

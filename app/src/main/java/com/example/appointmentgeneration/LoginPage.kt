@@ -8,13 +8,20 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
 
 class LoginPage : Fragment() {
     private lateinit var idEditText: EditText
     private lateinit var pwEditText: EditText
     private lateinit var loginButton: Button
     private lateinit var signupButton: Button
+
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +37,28 @@ class LoginPage : Fragment() {
         pwEditText.inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
 
         loginButton.setOnClickListener {
-            handleLogin()
+            val id = idEditText.text.toString().trim()
+            val password = pwEditText.text.toString().trim()
+
+            if (id.isEmpty() || password.isEmpty()) {
+                Toast.makeText(requireContext(), "아이디와 비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show()
+            } else {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val success = checkCredentials(id, password)
+                    if (success) {
+                        loginSuccess(id)
+                        findNavController().navigate(
+                            R.id.action_loginPage_to_navigation_home,
+                            null,
+                            androidx.navigation.NavOptions.Builder()
+                                .setPopUpTo(R.id.loginPage, true) // 로그인 화면을 백스택에서 제거
+                                .build()
+                        )
+                    } else {
+                        Toast.makeText(requireContext(), "아이디와 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
 
         signupButton.setOnClickListener {
@@ -40,40 +68,33 @@ class LoginPage : Fragment() {
         return rootView
     }
 
-    private fun handleLogin() {
-        val id = idEditText.text.toString().trim()
-        val password = pwEditText.text.toString().trim()
-
-        when {
-            id.isEmpty() && password.isEmpty() -> {
-                Toast.makeText(requireContext(), "아이디와 비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show()
-            }
-            id.isEmpty() -> {
-                Toast.makeText(requireContext(), "아이디를 입력하세요.", Toast.LENGTH_SHORT).show()
-            }
-            password.isEmpty() -> {
-                Toast.makeText(requireContext(), "비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show()
-            }
-            else -> {
-                if (checkCredentials(id, password)) {
-                    findNavController().navigate(R.id.action_loginPage_to_navigation_home)
-                    loginSuccess(id)
-                } else {
-                    Toast.makeText(requireContext(), "아이디와 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+    private suspend fun checkCredentials(id: String, password: String): Boolean {
+        return suspendCancellableCoroutine { continuation ->
+            db.collection("users")
+                .whereEqualTo("id", id)
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    if (!querySnapshot.isEmpty) {
+                        val storedPassword = querySnapshot.documents[0].getString("pw")
+                        continuation.resume(storedPassword == password) // 비밀번호 일치 여부 확인
+                    } else {
+                        continuation.resume(false) // ID가 존재하지 않음
+                    }
                 }
-            }
+                .addOnFailureListener { exception ->
+                    println("Error checking credentials: $exception")
+                    continuation.resume(false)
+                }
         }
     }
 
-    private fun checkCredentials(id: String, password: String): Boolean {
-        // 파이어베이스에서 사용자 아이디 정보를 읽어오기
-        // 일치하는 아이디를 찾아서 비밀번호 읽어오기
-        // 비밀번호가 일치하면 true, 아니면 false
-        return true
-    }
-
     private fun loginSuccess(id: String) {
-        // 로그인 성공 시 처리
-        // 아마도 id 전달
+        val sharedPreferences = requireContext().getSharedPreferences("UserPrefs", 0)
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("isLoggedIn", true)
+        editor.putString("userId", id)
+        editor.apply()
+
+        Toast.makeText(requireContext(), "로그인 성공! 환영합니다, $id 님.", Toast.LENGTH_SHORT).show()
     }
 }
