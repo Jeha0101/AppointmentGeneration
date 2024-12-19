@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -35,33 +36,32 @@
         android:id="@+id/navigation_home"
         android:name="com.example.appointmentgeneration.ui.home.HomeFragment"
         android:label="@string/home_title"
-        tools:layout="@layout/fragment_home"/>
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_navigation_home_to_scheduleCreationFragment"
+            app:destination="@id/scheduleCreationFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_mypage"
         android:name="com.example.appointmentgeneration.ui.mypage.MypageFragment"
-        android:label="@string/mypage_title" />
+        android:label="@string/mypage_title"
+        tools:layout="@layout/fragment_mypage" />
 
     <fragment
         android:id="@+id/navigation_schedules"
         android:name="com.example.appointmentgeneration.ui.schedules.SchedulesFragment"
-        android:label="@string/schedules_title" />
+        android:label="@string/schedules_title"
+        tools:layout="@layout/fragment_schedules">
+        <action
+            android:id="@+id/action_navigation_schedules_to_scheduleCreationFragment"
+            app:destination="@id/scheduleCreationFragment" />
+    </fragment>
 
-    <!-- 기존 navigation 태그 내에 추가 -->
     <fragment
         android:id="@+id/scheduleCreationFragment"
         android:name="com.example.appointmentgeneration.ui.schedule.ScheduleCreationFragment"
         android:label="약속 생성"
-        tools:layout="@layout/schedule_creation_fragment">
-    </fragment>
+        tools:layout="@layout/schedule_creation_fragment" />
 
-    <!-- schedules fragment에 action 추가 -->
-    <action
-        android:id="@+id/action_navigation_schedules_to_scheduleCreationFragment"
-        app:destination="@id/scheduleCreationFragment" />
-
-    <!-- navigation_home fragment에 action 추가 -->
-    <action
-        android:id="@+id/action_navigation_home_to_scheduleCreationFragment"
-        app:destination="@id/scheduleCreationFragment" />
 </navigation>
