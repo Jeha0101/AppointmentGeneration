@@ -26,13 +26,16 @@
         tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_signUp_to_nextPage"
-            app:destination="@id/navigation_home" />
+            app:destination="@id/navigation_home"
+            app:popUpTo="@id/loginPage"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.appointmentgeneration.ui.home.HomeFragment"
-        android:label="@string/home_title" />
+        android:label="@string/home_title"
+        tools:layout="@layout/fragment_home"/>
 
     <fragment
         android:id="@+id/navigation_mypage"
