@@ -68,13 +68,12 @@ class MypageFragment : Fragment() {
             remove("userId")
             apply()
         }
-
-        // 로그인 페이지로 이동하고 백스택 제거
+        // 로그인 페이지로 이동하고 백스택 제거 (loginPage까지 모두 제거)
         findNavController().navigate(
             R.id.loginPage,
             null,
             androidx.navigation.NavOptions.Builder()
-                .setPopUpTo(R.id.navigation_home, true)
+                .setPopUpTo(R.id.loginPage, true)  // loginPage까지 백스택 제거
                 .build()
         )
     }
