@@ -89,12 +89,15 @@ class LoginPage : Fragment() {
     }
 
     private fun loginSuccess(id: String) {
+        // SharedPreferences에 로그인 상태 및 userId 저장
         val sharedPreferences = requireContext().getSharedPreferences("UserPrefs", 0)
         val editor = sharedPreferences.edit()
         editor.putBoolean("isLoggedIn", true)
         editor.putString("userId", id)
         editor.apply()
 
+        // 환영 메시지 출력
         Toast.makeText(requireContext(), "로그인 성공! 환영합니다, $id 님.", Toast.LENGTH_SHORT).show()
     }
+
 }

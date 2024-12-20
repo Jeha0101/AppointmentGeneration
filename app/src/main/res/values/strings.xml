@@ -12,4 +12,7 @@
     <string name="desired_destination">희망 목적지</string>
     <string name="add_destination">목적지 추가하기</string>
     <string name="create_schedule">일정 생성</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_notifications">Notifications</string>
+    <string name="menu_schedules">Schedules</string>
 </resources>
