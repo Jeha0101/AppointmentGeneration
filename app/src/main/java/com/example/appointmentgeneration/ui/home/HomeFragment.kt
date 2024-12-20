@@ -1,30 +1,43 @@
 package com.example.appointmentgeneration.ui.home
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.appointmentgeneration.R
 import com.example.appointmentgeneration.databinding.FragmentHomeBinding
+import com.example.appointmentgeneration.ui.address.AddressSearchActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
-class HomeFragment : Fragment() {
 
+class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val homeViewModel: HomeViewModel by viewModels()
-
     private val firestore = FirebaseFirestore.getInstance()
 
+    private val addressSearchLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val address = result.data?.getStringExtra("address")
+            binding.editMyLocation.setText(address)
+        }
+    }
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -36,8 +49,40 @@ class HomeFragment : Fragment() {
         setupListeners()
     }
 
+    private fun saveScheduleToDatabase() {
+        val sharedPreferences = requireContext().getSharedPreferences("UserPrefs", 0)
+        val userId = sharedPreferences.getString("userId", null)
+
+        if (userId.isNullOrEmpty()) {
+            Toast.makeText(requireContext(), "로그인이 필요합니다.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val scheduleData = homeViewModel.getSchedule().toMutableMap()
+        scheduleData["user_id"] = userId
+
+        firestore.collection("schedules")
+            .add(scheduleData)
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "일정이 성공적으로 저장되었습니다!", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(requireContext(), "일정 저장 실패: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun setupListeners() {
         with(binding) {
+            // 주소 검색
+            editMyLocation.setOnClickListener {
+                addressSearchLauncher.launch(Intent(requireContext(), AddressSearchActivity::class.java))
+            }
+
             // 날짜 선택
             btnDate.setOnClickListener {
                 val calendar = Calendar.getInstance()
@@ -87,30 +132,5 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun saveScheduleToDatabase() {
-        val sharedPreferences = requireContext().getSharedPreferences("UserPrefs", 0)
-        val userId = sharedPreferences.getString("userId", null)
 
-        if (userId.isNullOrEmpty()) {
-            Toast.makeText(requireContext(), "로그인이 필요합니다.", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val scheduleData = homeViewModel.getSchedule().toMutableMap()
-        scheduleData["user_id"] = userId
-
-        firestore.collection("schedules")
-            .add(scheduleData)
-            .addOnSuccessListener {
-                Toast.makeText(requireContext(), "일정이 성공적으로 저장되었습니다!", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(requireContext(), "일정 저장 실패: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }
