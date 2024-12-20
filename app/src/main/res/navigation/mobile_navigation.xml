@@ -72,4 +72,18 @@
         android:name="com.example.appointmentgeneration.ui.destinations.DestinationSelectionFragment"
         android:label="DestinationSelectionFragment"
         tools:layout="@layout/fragment_destination_selection" />
+
+    <!-- ScheduleGenerationFragment 추가 -->
+    <fragment
+        android:id="@+id/scheduleGenerationFragment"
+        android:name="com.example.appointmentgeneration.ui.schedule.ScheduleGenerationFragment"
+        android:label="일정 생성"
+        tools:layout="@layout/fragment_schedule_generation" />
+
+    <!-- HomeFragment에서 ScheduleGenerationFragment로 이동하는 액션 추가 -->
+    <action
+        android:id="@+id/action_navigation_home_to_scheduleGenerationFragment"
+        app:destination="@id/scheduleGenerationFragment" />
+
+
 </navigation>

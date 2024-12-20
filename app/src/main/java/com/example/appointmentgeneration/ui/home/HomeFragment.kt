@@ -1,5 +1,6 @@
 package com.example.appointmentgeneration.ui.home
 
+
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -17,6 +18,7 @@ import com.example.appointmentgeneration.R
 import com.example.appointmentgeneration.databinding.FragmentHomeBinding
 import com.example.appointmentgeneration.ui.address.AddressSearchActivity
 import com.google.firebase.firestore.FirebaseFirestore
+import androidx.navigation.fragment.findNavController
 import java.util.*
 
 
@@ -128,6 +130,8 @@ class HomeFragment : Fragment() {
             // 일정 생성
             btnCreateSchedule.setOnClickListener {
                 saveScheduleToDatabase()
+                // 네비게이션 동작 추가
+                findNavController().navigate(R.id.action_navigation_home_to_scheduleGenerationFragment)
             }
         }
     }
