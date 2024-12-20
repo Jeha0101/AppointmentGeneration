@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.mypage.MypageFragment">
 
     <!-- 사용자 프로필 섹션 -->
@@ -13,7 +14,9 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="32dp"
-        android:src="@android:drawable/ic_menu_myplaces"
+        android:src="@drawable/ic_profile"
+        android:padding="16dp"
+        android:background="@drawable/bg_circle_gray"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -25,33 +28,50 @@
         android:layout_marginTop="16dp"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:textColor="#333333"
         tools:text="홍길동"
         app:layout_constraintTop_toBottomOf="@id/imageViewProfile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- 약속 관리 버튼 -->
-    <Button
-        android:id="@+id/buttonManageAppointments"
-        android:layout_width="0dp"
+    <!-- 버튼 컨테이너 -->
+    <LinearLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
         android:layout_marginTop="32dp"
-        android:text="내 약속 보기"
-        app:layout_constraintTop_toBottomOf="@id/textViewUserName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/textViewUserName">
 
-    <!-- 로그아웃 버튼 -->
-    <Button
-        android:id="@+id/buttonLogout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        android:text="로그아웃"
-        app:layout_constraintTop_toBottomOf="@id/buttonManageAppointments"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <!-- 약속 관리 버튼 -->
+        <Button
+            android:id="@+id/buttonManageAppointments"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="내 약속 보기"
+            android:textColor="#333333"
+            android:drawableTop="@drawable/ic_calendar"
+            android:drawablePadding="8dp"
+            android:background="@drawable/bg_button_gray"
+            style="@style/Widget.MaterialComponents.Button.TextButton" />
+
+        <!-- 로그아웃 버튼 -->
+        <Button
+            android:id="@+id/buttonLogout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="로그아웃"
+            android:textColor="#333333"
+            android:drawableTop="@drawable/ic_logout"
+            android:drawablePadding="8dp"
+            android:background="@drawable/bg_button_gray"
+            style="@style/Widget.MaterialComponents.Button.TextButton" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
