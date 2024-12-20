@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_navigation_home_to_scheduleCreationFragment"
             app:destination="@id/scheduleCreationFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_destinationSelectionFragment"
+            app:destination="@id/destinationSelectionFragment" />
     </fragment>
 
     <fragment
@@ -64,4 +67,9 @@
         android:label="약속 생성"
         tools:layout="@layout/schedule_creation_fragment" />
 
+    <fragment
+        android:id="@+id/destinationSelectionFragment"
+        android:name="com.example.appointmentgeneration.ui.destinations.DestinationSelectionFragment"
+        android:label="DestinationSelectionFragment"
+        tools:layout="@layout/fragment_destination_selection" />
 </navigation>

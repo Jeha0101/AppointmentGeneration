@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.appointmentgeneration.R
 import com.example.appointmentgeneration.databinding.FragmentHomeBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
@@ -75,7 +77,7 @@ class HomeFragment : Fragment() {
 
             // 목적지 추가
             btnAddDestination.setOnClickListener {
-                Toast.makeText(requireContext(), "목적지 추가 기능은 구현 중입니다.", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_homeFragment_to_destinationSelectionFragment)
             }
 
             // 일정 생성

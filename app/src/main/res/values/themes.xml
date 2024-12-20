@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.AppointmentGeneration" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <item name="colorPrimary">#BA55D3</item>
+        <item name="colorPrimary">#914DFF</item>
         <item name="colorPrimaryDark">#9932CC</item>
         <item name="colorAccent">#BA55D3</item>
 
@@ -11,6 +11,6 @@
 
     <style name="Widget.App.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/white</item>
-        <item name="backgroundTint">#BA55D3</item>
+        <item name="backgroundTint">#914DFF</item>
     </style>
 </resources>

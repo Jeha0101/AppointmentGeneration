@@ -1,0 +1,203 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/destinationSelectionFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- AppBarLayout -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/DestinationsAppBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:background="@android:color/white">
+
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="top"
+            android:background="@android:color/transparent"
+            app:contentInsetStartWithNavigation="0dp">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="start|center_vertical"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_back"
+                android:contentDescription="뒤로가기"
+                android:padding="3dp"
+                android:scaleType="centerInside"
+                android:onClick="onBackPressed" />
+
+            <!-- Done Button -->
+            <Button
+                android:id="@+id/btn_done"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:backgroundTint="@color/white"
+                android:text="완료"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:paddingHorizontal="15dp"
+                android:layout_marginHorizontal="10dp"
+                android:onClick="onDonePressed" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="15dp"
+            android:background="@android:color/white">
+
+            <androidx.constraintlayout.helper.widget.Flow
+                android:id="@+id/flow_tags"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:flow_wrapMode="chain"
+                app:flow_horizontalAlign="start"
+                app:flow_horizontalGap="8dp"
+                app:flow_verticalGap="8dp"
+                app:constraint_referenced_ids="tag1,tag2,tag3" />
+
+            <!-- 태그 예제 -->
+            <LinearLayout
+                android:id="@+id/tag1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/tag_background"
+                android:paddingRight="18dp"
+                android:paddingLeft="15dp"
+                android:paddingVertical="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp">
+                <ImageButton
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="6dp"
+                    android:scaleType="centerInside"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_x"
+                    android:contentDescription="삭제"
+                    android:onClick="onDeleteTag1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="숙대입구"
+                    android:textColor="@android:color/white"
+                    android:textSize="20dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tag2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/tag_background"
+                android:paddingRight="18dp"
+                android:paddingLeft="15dp"
+                android:paddingVertical="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp">
+                <ImageButton
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="6dp"
+                    android:scaleType="centerInside"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_x"
+                    android:contentDescription="삭제"
+                    android:onClick="onDeleteTag1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="포토부스"
+                    android:textColor="@android:color/white"
+                    android:textSize="20dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tag3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/tag_background"
+                android:paddingRight="18dp"
+                android:paddingLeft="15dp"
+                android:paddingVertical="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp">
+                <ImageButton
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="6dp"
+                    android:scaleType="centerInside"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_x"
+                    android:contentDescription="삭제"
+                    android:onClick="onDeleteTag1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="영화관"
+                    android:textColor="@android:color/white"
+                    android:textSize="20dp"/>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@android:color/white"
+            android:layout_gravity="bottom">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray" />
+
+            <!-- TabLayout (탭 바) -->
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/destinationsTabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                app:tabIndicatorColor="#BA55D3"
+                app:tabTextColor="@android:color/black"
+                app:tabIndicatorHeight="4dp">
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="주제선택" />
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="지도검색" />
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="동네 선택" />
+            </com.google.android.material.tabs.TabLayout>
+        </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- ViewPager -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="250dp" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

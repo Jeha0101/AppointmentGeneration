@@ -55,6 +55,8 @@ dependencies {
     //implementation("com.naver.maps:map-sdk:3.15.0")
     //implementation("com.google.android.gms:play-services-location:21.0.1")
 
+    implementation("androidx.constraintlayout:constraintlayout:2.2.0")
+
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
     implementation("com.google.firebase:firebase-analytics-ktx")
