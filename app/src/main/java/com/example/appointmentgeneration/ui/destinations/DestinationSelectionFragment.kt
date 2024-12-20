@@ -1,3 +1,5 @@
+package com.example.appointmentgeneration.ui.destinations
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -5,9 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.appointmentgeneration.databinding.FragmentDestinationSelectionBinding
-import com.example.appointmentgeneration.ui.destinations.DestinationFirstFragment
-import com.example.appointmentgeneration.ui.destinations.DestinationSecondFragment
-import com.example.appointmentgeneration.ui.destinations.DestinationThirdFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DestinationSelectionFragment : Fragment() {
