@@ -123,7 +123,45 @@
                 android:id="@+id/radio_set_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="가격대 입력" />
+                android:text="가격대 설정" />
+
+            <!-- 가격 입력 필드 (라디오 버튼 선택시 보이도록) -->
+            <LinearLayout
+                android:id="@+id/layout_price_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:layout_marginTop="8dp">
+
+                <EditText
+                    android:id="@+id/edit_price_min"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:hint="최소 금액" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" ~ "
+                    android:layout_marginHorizontal="8dp"/>
+
+                <EditText
+                    android:id="@+id/edit_price_max"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:hint="최대 금액" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="원"
+                    android:layout_marginStart="4dp"/>
+            </LinearLayout>
         </RadioGroup>
 
         <View
@@ -144,22 +182,57 @@
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chip_group_mood"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:singleSelection="false">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_natural"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="차분한"
+                android:checkable="true"
+                style="@style/Widget.MaterialComponents.Chip.Filter"
+                app:chipBackgroundColor="@color/chip_background_color"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_healing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="힐링형"
+                android:checkable="true"
+                style="@style/Widget.MaterialComponents.Chip.Filter"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="활동적인"
+                android:checkable="true"
+                style="@style/Widget.MaterialComponents.Chip.Filter"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_quiet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="조용한"
+                android:checkable="true"
+                style="@style/Widget.MaterialComponents.Chip.Filter"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_trendy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="트렌디한"
+                android:checkable="true"
+                style="@style/Widget.MaterialComponents.Chip.Filter"/>
+
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_romantic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="로맨틱" />
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_casual"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="캐주얼" />
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_unique"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="독특한" />
+                android:text="로맨틱한"
+                android:checkable="true"
+                style="@style/Widget.MaterialComponents.Chip.Filter"/>
         </com.google.android.material.chip.ChipGroup>
 
         <!-- 일정 생성 -->
