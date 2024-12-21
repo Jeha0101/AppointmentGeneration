@@ -12,6 +12,7 @@ import com.example.appointmentgeneration.BuildConfig
 import com.example.appointmentgeneration.R
 import com.example.appointmentgeneration.ScheduleData
 import com.example.appointmentgeneration.databinding.FragmentScheduleGenerationBinding
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -26,8 +27,9 @@ class ScheduleGenerationFragment : Fragment() {
     private var _binding: FragmentScheduleGenerationBinding? = null
     private val binding get() = _binding!!
 
-    // OpenAI API 키
+    private val firestore = FirebaseFirestore.getInstance()
     private val apiKey = BuildConfig.GPT_API_KEY
+    private var generatedSchedule: String = "" // GPT 결과 저장
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,9 +55,16 @@ class ScheduleGenerationFragment : Fragment() {
             fetchScheduleFromGPT(it) // GPT 호출
         }
 
-        // 홈으로 돌아가기 버튼 클릭 이벤트
+        // 홈으로 돌아가기 버튼
         binding.btnBackToHome.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+
+        // 일정 저장 버튼
+        binding.btnSaveSchedule.setOnClickListener {
+            scheduleData?.let {
+                saveScheduleToFirebase(it) // Firebase 저장 호출
+            } ?: Toast.makeText(requireContext(), "저장할 데이터가 없습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -71,11 +80,12 @@ class ScheduleGenerationFragment : Fragment() {
                 val response = callGPTApi(prompt)
                 withContext(Dispatchers.Main) {
                     showLoading(false) // 로딩 화면 숨기기
+                    generatedSchedule = response // 응답 저장
                     binding.tvScheduleResponse.text = response // 응답 표시
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    showLoading(false) // 로딩 화면 숨기기
+                    showLoading(false)
                     Toast.makeText(requireContext(), "일정 생성 실패: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -135,6 +145,40 @@ class ScheduleGenerationFragment : Fragment() {
                 choices.getJSONObject(0).getJSONObject("message").getString("content")
             }
         }
+    }
+
+    /**
+     * 일정 저장 (Firebase)
+     */
+    private fun saveScheduleToFirebase(scheduleData: ScheduleData) {
+        val sharedPreferences = requireContext().getSharedPreferences("UserPrefs", 0)
+        val userId = sharedPreferences.getString("userId", null)
+
+        if (userId.isNullOrEmpty()) {
+            Toast.makeText(requireContext(), "로그인이 필요합니다.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val scheduleMap = hashMapOf(
+            "date" to (scheduleData.scheduleDate ?: "미정"),
+            "time" to (scheduleData.scheduleTime ?: "미정"),
+            "response" to generatedSchedule
+        )
+
+        firestore.collection("users")
+            .whereEqualTo("id", userId)
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    firestore.collection("users")
+                        .document(document.id)
+                        .collection("schedules")
+                        .add(scheduleMap)
+                        .addOnSuccessListener {
+                            Toast.makeText(requireContext(), "일정 저장 완료!", Toast.LENGTH_SHORT).show()
+                        }
+                }
+            }
     }
 
     /**

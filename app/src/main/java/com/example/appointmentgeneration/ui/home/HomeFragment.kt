@@ -66,28 +66,6 @@ class HomeFragment : Fragment() {
         setupListeners()
     }
 
-    private fun saveScheduleToDatabase() {
-        val sharedPreferences = requireContext().getSharedPreferences("UserPrefs", 0)
-        val userId = sharedPreferences.getString("userId", null)
-
-        if (userId.isNullOrEmpty()) {
-            Toast.makeText(requireContext(), "로그인이 필요합니다.", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val scheduleData = homeViewModel.getSchedule().toMutableMap()
-        scheduleData["user_id"] = userId
-
-        firestore.collection("schedules")
-            .add(scheduleData)
-            .addOnSuccessListener {
-                Toast.makeText(requireContext(), "일정이 성공적으로 저장되었습니다!", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(requireContext(), "일정 저장 실패: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -131,9 +109,6 @@ class HomeFragment : Fragment() {
 
                 // 일정 데이터 객체 생성
                 val scheduleData = homeViewModel.getScheduleData()
-
-                // 기존 저장 로직 실행
-                saveScheduleToDatabase()
 
                 // 데이터 전달을 위한 Bundle 생성
                 val bundle = Bundle().apply {
@@ -211,6 +186,4 @@ class HomeFragment : Fragment() {
 
         }
     }
-
-
 }
