@@ -21,6 +21,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import androidx.navigation.fragment.findNavController
 import java.util.*
 import com.google.android.material.chip.Chip
+import android.widget.EditText
+import android.widget.LinearLayout
 
 
 class HomeFragment : Fragment() {
@@ -95,11 +97,18 @@ class HomeFragment : Fragment() {
 
     private fun setupListeners() {
         with(binding) {
-            // 주소 검색
-            editMyLocation.setOnClickListener {
-                addressSearchLauncher.launch(Intent(requireContext(), AddressSearchActivity::class.java))
+            // 내 위치 텍스트 입력 저장
+            editMyLocation.setOnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus) { // 포커스가 벗어났을 때 동작
+                    val location = editMyLocation.text.toString()
+                    if (location.isNotEmpty()) {
+                        homeViewModel.setMyLocation(location) // ViewModel에 저장
+                        Toast.makeText(requireContext(), "내 위치가 저장되었습니다: $location", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), "위치를 입력해주세요", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
-
             // 가격대 라디오 버튼 리스너
             radioGroupPrice.setOnCheckedChangeListener { _, checkedId ->
                 // 가격대 입력 레이아웃 표시/숨김 처리
@@ -201,8 +210,39 @@ class HomeFragment : Fragment() {
 
             // 친구 추가
             btnAddFriend.setOnClickListener {
-                Toast.makeText(requireContext(), "친구 추가 기능은 구현 중입니다.", Toast.LENGTH_SHORT).show()
+                if (homeViewModel.getScheduleData().friendLocations.size >= 3) {
+                    Toast.makeText(requireContext(), "최대 3명의 친구 위치만 추가 가능합니다.", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                // 새로운 EditText 생성
+                val editText = EditText(requireContext()).apply {
+                    hint = "친구 위치 입력"
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    ).apply {
+                        setMargins(0, 8, 0, 8) // 여백 추가
+                    }
+                }
+
+                // 입력창을 컨테이너에 추가
+                binding.containerFriendLocations.addView(editText)
+
+                // 포커스 해제 시 ViewModel에 저장
+                editText.setOnFocusChangeListener { _, hasFocus ->
+                    if (!hasFocus) {
+                        val friendLocation = editText.text.toString()
+                        if (friendLocation.isNotEmpty()) {
+                            homeViewModel.addFriendLocation(friendLocation)
+                            Toast.makeText(requireContext(), "친구 위치 저장: $friendLocation", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(requireContext(), "친구 위치를 입력해주세요.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
             }
+
 
             // 목적지 추가
             btnAddDestination.setOnClickListener {

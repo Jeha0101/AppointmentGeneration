@@ -26,6 +26,13 @@
     }).embed(document.getElementById('wrap'));
     document.getElementById('wrap').style.display = 'block'; // div가 보이도록 설정
 }
+    window.addEventListener('message', function (event) {
+        if (event.origin !== 'http://your-expected-origin') { // 이 부분에 your-expected-origin을 수정
+            return; // 안전하지 않은 메시지는 무시
+        }
+        // 수신된 메시지 처리
+        console.log('Received message:', event.data); // 디버깅용
+    });
 
 </script>
 </body>
