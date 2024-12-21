@@ -24,7 +24,6 @@ import com.google.android.material.chip.Chip
 import android.widget.EditText
 import android.widget.LinearLayout
 
-
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -179,7 +178,7 @@ class HomeFragment : Fragment() {
                     requireContext(),
                     { _, hour, minute ->
                         val selectedTime = String.format("%02d:%02d", hour, minute)
-                        homeViewModel.setTime(selectedTime)
+                        homeViewModel.setTime(selectedTime) // 시간 저장
                         Toast.makeText(requireContext(), "시간 선택: $selectedTime", Toast.LENGTH_SHORT).show()
                     },
                     calendar.get(Calendar.HOUR_OF_DAY),
