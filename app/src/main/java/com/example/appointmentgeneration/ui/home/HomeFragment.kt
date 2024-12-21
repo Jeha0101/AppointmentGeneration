@@ -28,16 +28,6 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val homeViewModel: HomeViewModel by viewModels()
-    private val firestore = FirebaseFirestore.getInstance()
-
-    private val addressSearchLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val address = result.data?.getStringExtra("address")
-            binding.editMyLocation.setText(address)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -130,7 +120,6 @@ class HomeFragment : Fragment() {
                 )
             }
 
-            // 날짜 선택
             btnDate.setOnClickListener {
                 val calendar = Calendar.getInstance()
                 DatePickerDialog(
@@ -138,7 +127,7 @@ class HomeFragment : Fragment() {
                     { _, year, month, day ->
                         val selectedDate = "$year-${month + 1}-$day"
                         homeViewModel.setDate(selectedDate)
-                        Toast.makeText(requireContext(), "날짜 선택: $selectedDate", Toast.LENGTH_SHORT).show()
+                        homeViewModel.updateScheduleData()
                     },
                     calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH),
@@ -146,15 +135,14 @@ class HomeFragment : Fragment() {
                 ).show()
             }
 
-            // 시간 선택
             btnTime.setOnClickListener {
                 val calendar = Calendar.getInstance()
                 TimePickerDialog(
                     requireContext(),
                     { _, hour, minute ->
                         val selectedTime = String.format("%02d:%02d", hour, minute)
-                        homeViewModel.setTime(selectedTime) // 시간 저장
-                        Toast.makeText(requireContext(), "시간 선택: $selectedTime", Toast.LENGTH_SHORT).show()
+                        homeViewModel.setTime(selectedTime)
+                        homeViewModel.updateScheduleData()
                     },
                     calendar.get(Calendar.HOUR_OF_DAY),
                     calendar.get(Calendar.MINUTE),
