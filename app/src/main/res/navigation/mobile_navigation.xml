@@ -70,7 +70,7 @@
     <fragment
         android:id="@+id/destinationSelectionFragment"
         android:name="com.example.appointmentgeneration.ui.destinations.DestinationSelectionFragment"
-        android:label="DestinationSelectionFragment"
+        android:label=""
         tools:layout="@layout/fragment_destination_selection" />
 
     <!-- ScheduleGenerationFragment 추가 -->
