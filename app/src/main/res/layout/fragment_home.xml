@@ -29,7 +29,13 @@
                 android:layout_height="wrap_content"
                 android:hint="내 위치 입력" />
         </com.google.android.material.textfield.TextInputLayout>
-
+        <LinearLayout
+            android:id="@+id/container_friend_locations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp">
+        </LinearLayout>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_add_friend"
             android:layout_width="match_parent"

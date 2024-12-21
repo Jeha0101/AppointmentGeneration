@@ -50,6 +50,7 @@ class HomeViewModel : ViewModel() {
     val price: LiveData<String> get() = _price
     // 날짜 설정 함수
     fun setDate(date: String) {
+
         _date.value = date
     }
     // 시간 설정 함수
