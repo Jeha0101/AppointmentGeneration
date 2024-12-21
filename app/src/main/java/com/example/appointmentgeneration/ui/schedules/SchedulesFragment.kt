@@ -24,10 +24,6 @@ class SchedulesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.fabAddSchedule.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_schedules_to_scheduleCreationFragment)
-        }
     }
 
     override fun onDestroyView() {
