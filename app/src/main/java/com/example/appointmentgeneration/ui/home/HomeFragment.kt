@@ -85,6 +85,39 @@ class HomeFragment : Fragment() {
                 addressSearchLauncher.launch(Intent(requireContext(), AddressSearchActivity::class.java))
             }
 
+            // 가격대 라디오 버튼 리스너
+            radioGroupPrice.setOnCheckedChangeListener { _, checkedId ->
+                // 가격대 입력 레이아웃 표시/숨김 처리
+                layoutPriceInput.visibility = when (checkedId) {
+                    R.id.radio_set_price -> View.VISIBLE
+                    else -> View.GONE
+                }
+            }
+            // 일정 생성 버튼 클릭시 가격 정보도 포함하여 저장
+            btnCreateSchedule.setOnClickListener {
+                val priceInfo = when (radioGroupPrice.checkedRadioButtonId) {
+                    R.id.radio_no_price -> "상관없음"
+                    R.id.radio_set_price -> {
+                        val minPrice = editPriceMin.text.toString()
+                        val maxPrice = editPriceMax.text.toString()
+                        if (minPrice.isNotEmpty() && maxPrice.isNotEmpty()) {
+                            "$minPrice ~ $maxPrice 원"
+                        } else {
+                            Toast.makeText(requireContext(), "가격을 입력해주세요", Toast.LENGTH_SHORT).show()
+                            return@setOnClickListener
+                        }
+                    }
+                    else -> "상관없음"
+                }
+
+                // ViewModel에 가격 정보 저장
+                homeViewModel.setPrice(priceInfo)
+
+                // 기존 저장 로직 실행
+                saveScheduleToDatabase()
+                findNavController().navigate(R.id.action_navigation_home_to_scheduleGenerationFragment)
+            }
+
             // 날짜 선택
             btnDate.setOnClickListener {
                 val calendar = Calendar.getInstance()
@@ -127,12 +160,6 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(R.id.action_homeFragment_to_destinationSelectionFragment)
             }
 
-            // 일정 생성
-            btnCreateSchedule.setOnClickListener {
-                saveScheduleToDatabase()
-                // 네비게이션 동작 추가
-                findNavController().navigate(R.id.action_navigation_home_to_scheduleGenerationFragment)
-            }
         }
     }
 

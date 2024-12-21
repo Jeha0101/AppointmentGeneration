@@ -73,7 +73,7 @@
                 android:text="시간 선택" />
         </LinearLayout>
 
-        <!-- 가격대 선택 -->
+        <!-- 가격대 섹션 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -98,7 +98,45 @@
                 android:id="@+id/radio_set_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="가격대 입력" />
+                android:text="가격대 설정" />
+
+            <!-- 가격 입력 필드 (라디오 버튼 선택시 보이도록) -->
+            <LinearLayout
+                android:id="@+id/layout_price_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:layout_marginTop="8dp">
+
+                <EditText
+                    android:id="@+id/edit_price_min"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:hint="최소 금액" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" ~ "
+                    android:layout_marginHorizontal="8dp"/>
+
+                <EditText
+                    android:id="@+id/edit_price_max"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:hint="최대 금액" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="원"
+                    android:layout_marginStart="4dp"/>
+            </LinearLayout>
         </RadioGroup>
 
         <!-- 방문 장소 분위기 -->
