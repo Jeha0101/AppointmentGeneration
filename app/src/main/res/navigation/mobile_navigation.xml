@@ -71,7 +71,12 @@
         android:id="@+id/destinationSelectionFragment"
         android:name="com.example.appointmentgeneration.ui.destinations.DestinationSelectionFragment"
         android:label=""
-        tools:layout="@layout/fragment_destination_selection" />
+        tools:layout="@layout/fragment_destination_selection">
+        <action
+            android:id="@+id/action_destinationSelectionFragment_to_homeFragment"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <!-- ScheduleGenerationFragment 추가 -->
     <fragment

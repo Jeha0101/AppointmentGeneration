@@ -52,6 +52,10 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.loginPage, R.id.signUpFragment -> hideBottomNavAndActionBar()
+                R.id.destinationSelectionFragment -> {
+                    hideBottomNav()
+                    supportActionBar?.hide() // DestinationSelectionFragment에서 AppBar 비활성화
+                }
                 else -> showBottomNavAndActionBar()
             }
         }
@@ -89,6 +93,10 @@ class MainActivity : AppCompatActivity() {
                 .setPopUpTo(R.id.loginPage, true) // 로그인 화면을 백스택에서 제거
                 .build()
         )
+    }
+
+    private fun hideBottomNav() {
+        binding.bottomNavView.visibility = android.view.View.GONE
     }
 
     /** BottomNavigationView 및 ActionBar 숨기기 */

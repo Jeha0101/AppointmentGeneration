@@ -9,20 +9,21 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/DestinationsAppBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="280dp">
 
         <!-- Toolbar -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="?attr/actionBarSize"
             android:layout_gravity="top"
             android:background="@android:color/transparent"
+            app:navigationIcon="?attr/homeAsUpIndicator"
             app:title=""
             app:subtitle=""
             app:contentInsetStartWithNavigation="0dp">
-
         </androidx.appcompat.widget.Toolbar>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"

@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.appointmentgeneration.R
 import com.example.appointmentgeneration.databinding.FragmentDestinationSelectionBinding
@@ -27,8 +28,31 @@ class DestinationSelectionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Toolbar 뒤로 가기 버튼 설정
+        binding.toolbar.setNavigationOnClickListener {
+            // 선택한 태그 전달
+            val result = Bundle().apply {
+                putStringArrayList("selectedTags", ArrayList(selectedTags))
+            }
+            parentFragmentManager.setFragmentResult("selectedTagsKey", result)
+
+            findNavController().navigateUp() // 뒤로 가기
+        }
+
         setupViewPagerWithTabs()
         updateTags()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        // 선택한 태그들을 HomeFragment로 전달
+        val result = Bundle().apply {
+            putStringArrayList("selectedTags", ArrayList(selectedTags)) // 선택한 태그 전달
+        }
+
+        parentFragmentManager.setFragmentResult("selectedTagsKey", result) // 프래그먼트 결과 전달
     }
 
     private fun setupViewPagerWithTabs() {

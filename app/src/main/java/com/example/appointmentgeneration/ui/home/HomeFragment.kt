@@ -49,6 +49,20 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        parentFragmentManager.setFragmentResultListener(
+            "selectedTagsKey", this
+        ) { _, bundle ->
+            val selectedTags = bundle.getStringArrayList("selectedTags") ?: emptyList()
+
+            // ScheduleData에 추가
+            selectedTags.forEach {
+                homeViewModel.addDestination(it) // ViewModel에 목적지 추가
+            }
+
+            Toast.makeText(requireContext(), "선택한 목적지 추가 완료!", Toast.LENGTH_SHORT).show()
+        }
+
         setupListeners()
     }
 
