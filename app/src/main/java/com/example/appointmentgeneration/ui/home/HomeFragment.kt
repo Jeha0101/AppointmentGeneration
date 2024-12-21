@@ -109,6 +109,7 @@ class HomeFragment : Fragment() {
                 }
             }
             // 일정 생성 버튼 클릭시 가격 정보도 포함하여 저장
+            // 일정 생성 버튼 클릭 시 동작
             btnCreateSchedule.setOnClickListener {
                 val priceInfo = when (radioGroupPrice.checkedRadioButtonId) {
                     R.id.radio_no_price -> "상관없음"
@@ -128,9 +129,22 @@ class HomeFragment : Fragment() {
                 // ViewModel에 가격 정보 저장
                 homeViewModel.setPrice(priceInfo)
 
+                // 일정 데이터 객체 생성
+                val scheduleData = homeViewModel.getScheduleData()
+
                 // 기존 저장 로직 실행
                 saveScheduleToDatabase()
-                findNavController().navigate(R.id.action_navigation_home_to_scheduleGenerationFragment)
+
+                // 데이터 전달을 위한 Bundle 생성
+                val bundle = Bundle().apply {
+                    putParcelable("scheduleData", scheduleData)
+                }
+
+                // 페이지 이동 및 데이터 전달
+                findNavController().navigate(
+                    R.id.action_navigation_home_to_scheduleGenerationFragment,
+                    bundle
+                )
             }
 
             // 날짜 선택
