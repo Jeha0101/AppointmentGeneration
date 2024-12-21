@@ -6,10 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.GridLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.core.view.setMargins
 import androidx.fragment.app.Fragment
 import com.example.appointmentgeneration.R
@@ -17,8 +14,6 @@ import com.example.appointmentgeneration.R
 class DestinationSecondFragment : Fragment() {
 
     private lateinit var parentFragment: DestinationSelectionFragment
-
-    // 기본 태그 목록 (동네 선택)
     private val defaultTags = listOf(
         "숙명여대", "건대 입구", "마포구", "홍대", "건대",
         "강남", "성수", "영등포구", "종로구", "익선동",
@@ -29,23 +24,23 @@ class DestinationSecondFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return inflater.inflate(R.layout.fragment_destination_second, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initializeParentFragment()
+        setupUI(view)
+    }
 
-        // 부모 프래그먼트 확인 후 초기화
+    private fun initializeParentFragment() {
         val parent = requireParentFragment()
         if (parent is DestinationSelectionFragment) {
             parentFragment = parent
         } else {
             throw IllegalStateException("Parent fragment is not DestinationSelectionFragment")
         }
-
-        // UI 설정
-        setupUI(view)
     }
 
     private fun setupUI(view: View) {
@@ -54,32 +49,32 @@ class DestinationSecondFragment : Fragment() {
         val customTagInput = view.findViewById<EditText>(R.id.custom_tag_input)
         val addCustomTagButton = view.findViewById<Button>(R.id.add_custom_tag_button)
 
-        // 태그 초기화
         updateTagList(tagGridLayout)
+        setupSearchFilter(searchEditText, tagGridLayout)
+        setupCustomTagAddition(customTagInput, addCustomTagButton)
+    }
 
-        // 검색 기능
+    private fun setupSearchFilter(searchEditText: EditText, tagGridLayout: GridLayout) {
         searchEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                val query = s.toString()
-                filterTags(query)
+                filterTags(s.toString())
                 updateTagList(tagGridLayout)
             }
-
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
+    }
 
-        // 직접 추가 기능
+    private fun setupCustomTagAddition(customTagInput: EditText, addCustomTagButton: Button) {
         addCustomTagButton.setOnClickListener {
             val customTag = customTagInput.text.toString().trim()
             if (customTag.isNotEmpty()) {
-                parentFragment.addTag(customTag) // AppBar에 추가
+                parentFragment.addTag(customTag)
                 customTagInput.text.clear()
             }
         }
     }
 
-    // 태그 목록 필터링
     private fun filterTags(query: String) {
         filteredTags = if (query.isEmpty()) {
             defaultTags.toMutableList()
@@ -88,35 +83,30 @@ class DestinationSecondFragment : Fragment() {
         }
     }
 
-    // 태그 리스트 업데이트
     private fun updateTagList(gridLayout: GridLayout) {
         gridLayout.removeAllViews()
-
-        for (tag in filteredTags) {
-            val tagView = createTagView(tag)
-            gridLayout.addView(tagView)
+        filteredTags.forEach { tag ->
+            gridLayout.addView(createTagView(tag))
         }
     }
 
-    // 태그 뷰 생성
     private fun createTagView(tag: String): View {
-        val textView = TextView(requireContext()).apply {
+        return TextView(requireContext()).apply {
             text = tag
             textSize = 16f
-            setTextColor(resources.getColor(android.R.color.white, null)) // 텍스트 색상 흰색
+            setTextColor(resources.getColor(android.R.color.white, null))
             setPadding(24, 16, 24, 16)
-            setBackgroundResource(R.drawable.tag_background) // 태그 디자인
-            setOnClickListener {
-                parentFragment.addTag(tag) // AppBar에 추가
-            }
+            setBackgroundResource(R.drawable.tag_background)
+            layoutParams = createTagLayoutParams()
+            setOnClickListener { parentFragment.addTag(tag) }
         }
+    }
 
-        val layoutParams = GridLayout.LayoutParams().apply {
+    private fun createTagLayoutParams(): GridLayout.LayoutParams {
+        return GridLayout.LayoutParams().apply {
             setMargins(8)
             width = GridLayout.LayoutParams.WRAP_CONTENT
             height = GridLayout.LayoutParams.WRAP_CONTENT
         }
-        textView.layoutParams = layoutParams
-        return textView
     }
 }
