@@ -20,6 +20,7 @@ import com.example.appointmentgeneration.ui.address.AddressSearchActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import androidx.navigation.fragment.findNavController
 import java.util.*
+import com.google.android.material.chip.Chip
 
 
 class HomeFragment : Fragment() {
@@ -149,6 +150,26 @@ class HomeFragment : Fragment() {
                     true
                 ).show()
             }
+
+            // 분위기 칩 선택 리스너 추가
+            chipGroupMood.setOnCheckedChangeListener { group, _ ->
+                // 선택된 모든 칩의 텍스트를 리스트로 모음
+                val selectedMoods = mutableListOf<String>()
+
+                // 선택된 각 Chip의 ID를 확인하고 해당하는 텍스트 수집
+                for (chipId in group.checkedChipIds) {
+                    val chip = group.findViewById<Chip>(chipId)
+                    selectedMoods.add(chip.text.toString())
+                }
+
+                // 선택된 분위기가 있는 경우에만 ViewModel에 저장
+                if (selectedMoods.isNotEmpty()) {
+                    homeViewModel.setMood(selectedMoods.joinToString(", "))
+                } else {
+                    homeViewModel.setMood("없음")
+                }
+            }
+
 
             // 친구 추가
             btnAddFriend.setOnClickListener {
