@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.appointmentgeneration.databinding.ScheduleCreationFragmentBinding
+import java.text.SimpleDateFormat
 import java.util.*
 
 class ScheduleCreationFragment : Fragment() {
@@ -30,41 +30,41 @@ class ScheduleCreationFragment : Fragment() {
     }
 
     private fun setupUI() {
-        binding.apply {
-            calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-                val selectedDate = Calendar.getInstance().apply {
-                    set(year, month, dayOfMonth)
-                }
-                updateSelectedDate(selectedDate)
-            }
+        setupCalendarView()
+        setupButtons()
+        setupRecyclerView()
+    }
 
-            btnSearchLocations.setOnClickListener {
-                searchNearbyLocations()
+    private fun setupCalendarView() {
+        binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+            val selectedDate = Calendar.getInstance().apply {
+                set(year, month, dayOfMonth)
             }
-
-            btnAddFriend.setOnClickListener {
-                addFriend()
-            }
-
-            btnCreateSchedule.setOnClickListener {
-                createSchedule()
-            }
-
-            recyclerLocations.layoutManager = LinearLayoutManager(context)
+            updateSelectedDate(selectedDate)
         }
     }
 
+    private fun setupButtons() {
+        binding.btnSearchLocations.setOnClickListener { searchNearbyLocations() }
+        binding.btnAddFriend.setOnClickListener { addFriend() }
+        binding.btnCreateSchedule.setOnClickListener { createSchedule() }
+    }
+
+    private fun setupRecyclerView() {
+        binding.recyclerLocations.layoutManager = LinearLayoutManager(context)
+    }
+
     private fun updateSelectedDate(date: Calendar) {
-        val dateFormat = java.text.SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         binding.editDate.setText(dateFormat.format(date.time))
     }
 
     private fun searchNearbyLocations() {
-        Toast.makeText(context, "주변 장소 검색 기능 구현 예정", Toast.LENGTH_SHORT).show()
+        // 검색 기능 구현 예정
     }
 
     private fun addFriend() {
-        Toast.makeText(context, "친구 추가 기능 구현 예정", Toast.LENGTH_SHORT).show()
+        // 친구 추가 기능 구현 예정
     }
 
     private fun createSchedule() {
@@ -73,12 +73,16 @@ class ScheduleCreationFragment : Fragment() {
         val place = binding.editPlace.text.toString()
 
         if (date.isEmpty() || time.isEmpty() || place.isEmpty()) {
-            Toast.makeText(context, "모든 필드를 입력해주세요", Toast.LENGTH_SHORT).show()
+            showMessage("모든 필드를 입력해주세요")
             return
         }
 
-        Toast.makeText(context, "일정이 생성되었습니다: $date $time at $place", Toast.LENGTH_SHORT).show()
+        showMessage("일정이 생성되었습니다: $date $time at $place")
         requireActivity().onBackPressed()
+    }
+
+    private fun showMessage(message: String) {
+        android.widget.Toast.makeText(context, message, android.widget.Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {
