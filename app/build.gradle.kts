@@ -24,6 +24,7 @@ android {
         }
         buildConfigField("String", "NAVER_MAP_CLIENT_ID", "\"${properties.getProperty("NAVER_MAP_CLIENT_ID")}\"")
         buildConfigField("String", "NAVER_MAP_KEY", "\"${properties.getProperty("NAVER_MAP_KEY")}\"")
+        buildConfigField("String", "GPT_API_KEY", "\"${properties.getProperty("GPT_API_KEY")}\"")
     }
 
     buildTypes {

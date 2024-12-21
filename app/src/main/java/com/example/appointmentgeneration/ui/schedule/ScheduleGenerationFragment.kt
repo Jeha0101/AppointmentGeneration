@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.example.appointmentgeneration.BuildConfig
 import com.example.appointmentgeneration.R
 import com.example.appointmentgeneration.ScheduleData
 import com.example.appointmentgeneration.databinding.FragmentScheduleGenerationBinding
@@ -26,7 +27,7 @@ class ScheduleGenerationFragment : Fragment() {
     private val binding get() = _binding!!
 
     // OpenAI API 키
-    private val apiKey = "enterOpenAiApiKey"
+    private val apiKey = BuildConfig.GPT_API_KEY
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,6 +64,7 @@ class ScheduleGenerationFragment : Fragment() {
      */
     private fun fetchScheduleFromGPT(scheduleData: ScheduleData) {
         val prompt = createPrompt(scheduleData)
+        Log.d("GPTPrompt", prompt)
 
         lifecycleScope.launch(Dispatchers.IO) {
             try {
