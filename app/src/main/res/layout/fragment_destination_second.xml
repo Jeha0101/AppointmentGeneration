@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.destinations.DestinationSecondFragment">
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- 검색창 -->
+    <EditText
+        android:id="@+id/search_edit_text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="hello_second_fragment" />
+        android:layout_height="wrap_content"
+        android:hint="태그 검색"
+        android:drawableEnd="@android:drawable/ic_menu_search"
+        android:padding="12dp"
+        android:background="@android:color/white"
+        android:elevation="2dp"/>
 
-</FrameLayout>
+    <!-- 태그 표시 -->
+    <GridLayout
+        android:id="@+id/tag_grid_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:columnCount="3"
+        android:orientation="horizontal" />
+
+    <!-- 직접 입력 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
+
+        <EditText
+            android:id="@+id/custom_tag_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="직접 입력"
+            android:padding="12dp"
+            android:background="@android:color/white"
+            android:elevation="2dp"/>
+
+        <Button
+            android:id="@+id/add_custom_tag_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="+"
+            android:backgroundTint="@color/purple_500"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+</LinearLayout>
